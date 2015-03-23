@@ -1,0 +1,19 @@
+{
+	"pending": [
+		{
+			"id": 1,
+			"path": "http://www.downloadsite.com/path/to/file/1.jpg",
+			"size": 1024
+		},
+		{
+			"id": 2,
+			"path": "http://www.downloadsite.com/path/to/file/2.jpg",
+			"size": 2048
+		},
+		{
+			"id": 3,
+			"path": "http://www.downloadsite.com/path/to/file/3.jpg",
+			"size": 1024
+		}
+	]
+}

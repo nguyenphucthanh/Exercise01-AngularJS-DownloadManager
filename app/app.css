@@ -1,0 +1,16 @@
+/* app css stylesheet */
+body {
+  padding-top: 70px;
+}
+.table-list-files .col-id {
+	width: 50px;
+}
+.table-list-files .col-buttons {
+	width: 120px;
+}
+.table-list-files .col-percent {
+	width: 200px;
+}
+.table-list-files .col-size {
+	width: 150px;
+}

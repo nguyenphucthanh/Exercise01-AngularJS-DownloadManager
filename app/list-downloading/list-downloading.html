@@ -1,0 +1,51 @@
+<table class="table table-bordered table-list-files">
+	<thead>
+		<tr>
+			<th class="col-id">
+				ID
+			</th>
+			<th>
+				File path
+			</th>
+			<th class="col-size">
+				Size
+			</th>
+			<th class="col-percent">
+				Percent
+			</th>
+			<th class="col-buttons">
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="file in files track by $index">
+			<td class="text-right">
+				{{file.id}}
+			</td>
+			<td>
+				{{file.path}}
+			</td>
+			<td class="text-right">
+				{{file.size}}
+			</td>
+			<td>
+				<div class="progress">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="{{file.percentCompleted}}" aria-valuemin="0" aria-valuemax="100" style="width: {{file.percentCompleted}}%;">
+  						{{file.percentCompleted}}%
+  					</div>
+				</div>
+			</td>
+			<td class="text-center">
+				<button class="btn btn-warning" ng-click="file.pause()" ng-show="file.isDownloading">
+					<span class="glyphicon glyphicon-pause"></span>
+				</button>
+				<button class="btn btn-success" ng-click="file.start()" ng-show="!file.isDownloading">
+					<span class="glyphicon glyphicon-play"></span>
+				</button>
+				<button class="btn btn-danger" ng-click="moveToPending(file)" ng-show="!file.isDownloading">
+					<span class="glyphicon glyphicon-stop"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
