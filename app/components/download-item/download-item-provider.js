@@ -38,6 +38,7 @@ angular.module('myApp.download-item', [])
 			}
 			self.percentCompleted = parseInt((self.completed * 100) / self.size, 10);
 			if(self.percentCompleted === 100) {
+				_interval.cancel(self.promise);
 				if(angular.isFunction(self.onComplete)) {
 					self.onComplete();
 				}
