@@ -2,7 +2,7 @@
 
 angular.module('myApp.list-downloaded', [
 	'ngRoute',
-	'myApp.download-item'
+	'myApp.download-item.provider'
 ])
 
 .config(['$routeProvider', function($routeProvider) {
