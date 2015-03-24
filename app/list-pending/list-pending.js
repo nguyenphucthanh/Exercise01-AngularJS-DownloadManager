@@ -12,10 +12,8 @@ angular.module('myApp.list-pending', [
 	});
 }])
 
-.controller('ListPendingCtrl', ['$rootScope', '$scope', '$timeout', 'downloadItemProvider', function($rootScope, $scope, $timeout, downloadItemProvider) {
-	$timeout(function() {
-		$scope.files = $rootScope.listFiles.pending;
-	});
+.controller('ListPendingCtrl', ['$rootScope', '$scope', 'downloadItemProvider', function($rootScope, $scope, downloadItemProvider) {
+	$scope.files = $rootScope.listFiles.pending;
 	$scope.moveToDownloading = function(item) {
 		item.start();
 		downloadItemProvider.moveToList($rootScope.listFiles.pending, $rootScope.listFiles.downloading, item);
