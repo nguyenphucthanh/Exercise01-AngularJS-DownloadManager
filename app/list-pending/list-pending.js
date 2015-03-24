@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('myApp.list-pending', [
-	'ngRoute',
-	'myApp.download-item.provider'
+	'ngRoute'
 ])
 
 .config(['$routeProvider', function($routeProvider) {
@@ -12,10 +11,6 @@ angular.module('myApp.list-pending', [
 	});
 }])
 
-.controller('ListPendingCtrl', ['$rootScope', '$scope', 'downloadItemProvider', function($rootScope, $scope, downloadItemProvider) {
+.controller('ListPendingCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
 	$scope.files = $rootScope.listFiles.pending;
-	$scope.moveToDownloading = function(item) {
-		item.start();
-		downloadItemProvider.moveToList($rootScope.listFiles.pending, $rootScope.listFiles.downloading, item);
-	};
 }]);

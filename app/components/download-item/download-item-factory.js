@@ -2,9 +2,9 @@
 
 angular.module('myApp.download-item.factory', [])
 
-.factory('downloadItemFactory', ['$interval', function($interval) {
+.factory('downloadItemFactory', ['$interval', '$rootScope', function($interval, $rootScope) {
 
-	var _speed = 25; //example 25KB/s
+	var _speed = 100; //example 25KB/s
 
 	var DownloadItem = function(obj) {
 		this.id = obj.id;
@@ -14,10 +14,9 @@ angular.module('myApp.download-item.factory', [])
 		this.completed = 0;
 		this.promise = null;
 		this.isDownloading = false;
-		this.onComplete = function() {};
 	};
 
-	DownloadItem.prototype.start = function(callback) {
+	DownloadItem.prototype.start = function() {
 		var self = this;
 		self.isDownloading = true;
 		this.promise = $interval(function() {
@@ -30,40 +29,39 @@ angular.module('myApp.download-item.factory', [])
 			self.percentCompleted = parseInt((self.completed * 100) / self.size, 10);
 			if(self.percentCompleted === 100) {
 				$interval.cancel(self.promise);
-				if(angular.isFunction(self.onComplete)) {
-					self.onComplete();
-				}
+				var index = $rootScope.listFiles.downloading.indexOf(self);
+				$rootScope.listFiles.downloading.splice(index, 1);
+				$rootScope.listFiles.downloaded.push(self);
 			}
 		}, 1000);
-		if(angular.isFunction(callback)) {
-			callback.call(self);
-		}
+
+		var index = $rootScope.listFiles.pending.indexOf(self);
+		$rootScope.listFiles.pending.splice(index, 1);
+		$rootScope.listFiles.downloading.push(self);
 	};
 
-	DownloadItem.prototype.pause = function(callback) {
+	DownloadItem.prototype.pause = function() {
 		var self = this;
 		self.isDownloading = false;
 		$interval.cancel(this.promise);
-		if(angular.isFunction(callback)) {
-			callback.call(self);
-		}
 	};
 
-	DownloadItem.prototype.stop = function(callback) {
+	DownloadItem.prototype.stop = function() {
 		var self = this;
 		self.isDownloading = false;
 		$interval.cancel(this.promise);
 		this.completed = 0.0;
 		this.percentCompleted = 0.0;
-		if(angular.isFunction(callback)) {
-			callback.call(self);
-		}
+
+		var index = $rootScope.listFiles.downloading.indexOf(self);
+		$rootScope.listFiles.downloading.splice(index, 1);
+		$rootScope.listFiles.pending.push(self);
 	};
 
-	DownloadItem.prototype.remove = function(fromList) {
+	DownloadItem.prototype.remove = function() {
 		var self = this;
-		var index = fromList.indexOf(self);
-		fromList.splice(index, 1);
+		var index = $rootScope.listFiles.downloaded.indexOf(self);
+		$rootScope.listFiles.downloaded.splice(index, 1);
 	}
 
 	return DownloadItem;
